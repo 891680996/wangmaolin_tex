@@ -1,0 +1,105 @@
+%!TEX program = xelatex
+\documentclass[10pt,mathserif]{beamer}%,aspectratio=169 %画面比例16:9%
+
+\usepackage{xeCJK}
+\usepackage{graphicx}
+\usetheme[
+ %sidebar, % 会在每页左侧加上导航栏，参考 The AAU Sidebar Beamer Theme 设置
+ xdblue, % 不选会默认西电红色调，选上会将主题设置为西电蓝色调
+ english % 选上，会将图表等标题还原回英文标题
+ ]{XDUstyle}
+
+
+\title{Integrated DC-DC Converter}
+%\subtitle{子标题}
+\institute[School of Microelectronics]{School of Microelectronics} % 中括号部分为导航栏底所用尽可能精简
+\author{Wang Maolin}
+\date{\today}% 时间可自行设置
+	
+\begin{document}%
+{\xdbg \frame[plain,noframenumbering]{\titlepage}}%首页标题页
+
+%\section{section name}
+\begin{frame}{Topic Requirements}
+    \begin{figure}
+    \includegraphics[width=0.6\textwidth]{images/topic_requirements.bmp}
+    \caption{architectual of this design}
+    \end{figure}
+    \begin{itemize}
+        \item Could convert the Vin(2.5V-5V) into a fixed Vout(1.8V)
+        \item Using the voltage mode to achieve loop control
+        \item Using PID compensation to achieve 1MHz system unity gain band- width (Vin=3.6V, Iload = 300mA)
+    \end{itemize}
+\end{frame}
+
+%\section{section name}
+\begin{frame}{Voltage Control Model}
+	\begin{figure}
+    \includegraphics[width=0.5\textwidth]{images/diagram_of_voltage_control_model.bmp}
+    \caption{diagram of voltage control model}
+    \end{figure}
+    What need to be done:
+    \begin{itemize}
+        \item Realize a high speed comparator
+        \item Realize a hign gain operational amplifier
+    \end{itemize}
+\end{frame}
+
+%\section{section name}
+\begin{frame}{High Speed Comparator}
+    \begin{figure}
+    \includegraphics[width=0.8\textwidth]{images/comparator.bmp}
+    \caption{schematic of comparator}
+    \end{figure}
+    %What need to be done:
+    \begin{itemize}
+        \item It's easy because it do not need compensation
+        \item Large current can enhance voltage swing
+    \end{itemize}
+\end{frame}
+
+%\section{section name}
+\begin{frame}{High Speed Comparator}
+    \begin{figure}
+    \includegraphics[width=0.8\textwidth]{images/pwm_with_deadtime.bmp}
+    \caption{schematic of deadtime generator}
+    \end{figure}
+    %What need to be done:
+    \begin{itemize}
+        \item It's realized a schmidt trigger using comparator
+        \item Deadtime is different when the value of r1/r2 varies
+    \end{itemize}
+\end{frame}
+
+%\section{section name}
+\begin{frame}{High Speed Comparator}
+    \begin{figure}
+    \includegraphics[width=0.9\textwidth]{images/pwm_with_deadtime_simulation_wave.bmp}
+    \caption{waves of deadtime generator simulation}
+    \end{figure}
+    %What need to be done:
+    \begin{itemize}
+        \item The circuit can generate waves that we want
+        \item There is nonideal surge voltage hen it drives power MOSFET 
+    \end{itemize}
+\end{frame}
+
+%\section{section name}
+\begin{frame}{Error Amplifier}
+    \begin{figure}
+    \includegraphics[width=0.6\textwidth]{images/operational_amplifier.bmp}
+    \caption{schematic of operational amplifier}
+    \end{figure}
+    Problems:
+    \begin{itemize}
+        \item Why it can work without a DC operation point?
+        \item Why an EA have different simulation results when Vin differs
+    \end{itemize}
+\end{frame}
+
+{\xdbg%末页致谢
+\begin{frame}[plain,noframenumbering]
+ \finalpage{{\huge THANK YOU！}}
+\end{frame}}
+
+\end{document} 
